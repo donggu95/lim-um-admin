@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Restrt">
+	
+	<!-- 자동매핑이 아닌, 개발자의 임의적 매핑을 시도할 때 사용하는 태그 -->
+	<resultMap type="Restrt" id="JoinCategoryRestrt">
+		<id column="restrt_id" 			property="restrt_id"/>
+		<result column="sigun_id" property="sigun_id"/>
+		<result column="RESTRT_NM" property="RESTRT_NM"/>
+		<result column="sigun_id"		property="sigun_id"/>
+		<result column="restrt_re" 		property="restrt_re"/>
+		<association column="category_id"  property="category" javaType="Category" select="Category.select" />
+		
+		<!-- <result column="category_id" 		property="category.category_id"/>
+		<result column="category_name" 		property="category.category_name"/>
+		<result column="team" 		property="category.team"/>
+		<result column="step" 		property="category.step"/>
+		<result column="depth" 		property="category.depth"/> 
+		-->
+		<!-- 이미CategoryMapper에서 카테고리 한건을 담는 기능이 구현되어 있으므로, 기존의 매퍼들을 최대한 활용해보자 -->
+		
+		
+	</resultMap>
+
+	<select id="selectAll" resultMap="JoinCategoryRestrt">
+		select restrt_id, sigun_id, RESTRT_NM, restrt_re,
+		c.category_id as category_id category_name, team, step, depth
+		from category c, restrt p
+		where c.category_id=p.category_id
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Restrt">
+		select * from restrt where restrt_id=#{restrt_id}	
+	</select>
+
+	<insert id="insert" parameterType="Restrt">
+		insert into restrt(sigun_id,category_id,RESTRT_NM,	restrt_re	,REFINE_ROADNM_ADDR,	review_ea_id)
+		values(#{category.category_id},#{RESTRT_NM},#{restrt_re},#{REFINE_ROADNM_ADDR},#{review_ea_id})
+	
+		<selectKey keyColumn="restrt_id" order="AFTER" resultType="int" keyProperty="">
+			select last_insert_id() as restrt_id
+		</selectKey>
+	</insert>
+	
+	<update id="update" parameterType="Restrt">
+		update restrt set sigun_id=#{sigun_id}, category_id=#{category.category_id} 
+		,RESTRT_NM=#{RESTRT_NM}, restrt_re= #{restrt_re}, REFINE_ROADNM_ADDR=#{REFINE_ROADNM_ADDR}
+		,review_ea_id=#{review_ea_id} 
+	</update>
+	
+	<delete id="delete">
+		delete from restrt where review_ea_id=#{review_ea_id} 
+	</delete>
+	
+</mapper>
+
+
+

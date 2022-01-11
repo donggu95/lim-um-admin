@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<typeAliases>
+		<typeAlias type="com.koreait.matjip.domain.Restrt" alias="Restrt"/>
+		<typeAlias type="com.koreait.matjip.domain.Category" alias="Category"/>
+		<typeAlias type="com.koreait.matjip.domain.Notice" alias="Notice"/>
+		<typeAlias type="com.koreait.matjip.domain.Admin" alias="Admin"/>
+	</typeAliases>
+
+
+	<mappers>
+		<mapper resource="com/koreait/matjip/mybatis/RestrtMapper.xml"/>
+		<mapper resource="com/koreait/matjip/mybatis/CategoryMapper.xml"/>
+		<mapper resource="com/koreait/matjip/mybatis/NoticeMapper.xml"/>
+		<mapper resource="com/koreait/matjip/mybatis/AdminMapper.xml"/>
+	</mappers>
+
+	
+
+</configuration>
